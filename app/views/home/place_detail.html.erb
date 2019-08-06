@@ -1,0 +1,46 @@
+<div class="alert alert-success" role="alert">
+  <%= @place['result']['name'] %>
+</div>
+
+<b>Tel: </b><%= @place['result']['international_phone_number'] %> <br>
+<b>Şuan açık mı?: </b><span class="badge badge-secondary"><%= @place['result']['opening_hours']['open_now'] ? 'Evet' : 'Hayır'%></span> <br>
+
+<div class="card mt-2">
+	<div class="card-header">Çalışma günleri</div>
+	<div class="card-body">
+		<ul class="list-group list-group-flush">
+			<% @place['result']['opening_hours']['weekday_text'].each do |day| %>
+				<li class="list-group-item d-flex justify-content-between align-items-center" style="height: 30px;"><%= day %></li>
+			<% end %>
+		</ul>
+	</div>
+</div>
+
+
+<div class="card mt-2">
+	<div class="card-header">Resimler</div>
+	<div class="card-body">
+		<% @place['result']['photos'].each do |photo| %>
+		<a href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=720&maxheight=540&photoreference=<%= photo['photo_reference'] %>&key=AIzaSyAR1Q5HQsqNYXUW8ijdtCqxyc1xAfptGz4" data-toggle="lightbox" data-gallery="hotel-gallery">
+			<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference=<%= photo['photo_reference'] %>&key=AIzaSyAR1Q5HQsqNYXUW8ijdtCqxyc1xAfptGz4" style="width: 100px; height: 100px;" class="img-thumbnail img-fluid" alt="">
+		</a>
+		<% end %>
+	</div>
+</div>
+
+
+<div class="card mt-2">
+	<div class="card-header">İncelemeler</div>
+	<div class="card-body">
+		<% @place['result']['reviews'].each do |review| %>
+		<hr>
+			<b><%= review['author_name'] %> demişki; <br></b>
+			<%= review['text'] %> <br>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star <%= review['rating'] > 1 ? 'checked' : '' %>"></span>
+			<span class="fa fa-star <%= review['rating'] > 2 ? 'checked' : '' %>"></span>
+			<span class="fa fa-star <%= review['rating'] > 3 ? 'checked' : '' %>"></span>
+			<span class="fa fa-star <%= review['rating'] > 4 ? 'checked' : '' %>"></span>
+		<% end %>
+	</div>
+</div>
